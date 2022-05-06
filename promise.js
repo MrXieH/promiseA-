@@ -14,6 +14,7 @@ class Promise {
     this.reject = this.reject.bind(this)
 
     try {
+      console.log('constructor executor')
       executor(this.resolve, this.reject)
     } catch (error) {
       this.reject(error)
@@ -21,6 +22,7 @@ class Promise {
   }
 
   resolve(value) {
+    console.log('resolve', this.state, value)
     if (this.state === Promise.PENDING) {
       this.state = Promise.FULFILLED
       this.value = value
@@ -29,6 +31,7 @@ class Promise {
   }
 
   reject(reason) {
+    console.log('reject', this.state, reason)
     if (this.state === Promise.PENDING) {
       this.state = Promise.REJECTED
       this.reason = reason
@@ -41,6 +44,7 @@ class Promise {
   }
 
   then(onFulfilled, onRejected) {
+    console.log('then', this.state)
     if (typeof onFulfilled !== 'function') {
       onFulfilled = function(value) {
         return value
@@ -112,6 +116,7 @@ Promise.PENDING = 'pending'
 Promise.FULFILLED = 'fulfilled'
 Promise.REJECTED = 'reject'
 Promise.resolvePromise = function(promise2, x, resolve, reject) {
+  console.log('resolvePromise')
   if (promise2 === x) {
     reject(new TypeError('Chaining cycle detected for promise'))
   }
@@ -158,7 +163,7 @@ Promise.resolvePromise = function(promise2, x, resolve, reject) {
 }
 
 Promise.prototype.finally = function (callback) {
-  let P = this.constructor;
+  var P = this.constructor
   return this.then(
     value  => P.resolve(callback()).then(() => value),
     reason => P.resolve(callback()).then(() => { throw reason })

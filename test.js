@@ -1,19 +1,30 @@
 const PromiseA = require('./promise')
 
+
 var t = new PromiseA((resolve, reject) => {
-  resolve(1)
+  setTimeout(() => {
+    resolve(1)
+  }, 3000)
 }).then(
   (value) => {
     console.log('value', value)
+    return value
+  },
+  (reason) => {
+    console.log("reason", reason);
   }
-  // (reason) => {
-  //   console.log("reason", reason);
-  // }
-).catch(e => {
-  console.log('er2ror', e)
-}).finally(() => {
+).finally((e) => {
   console.log('f')
 })
+
+// PromiseA.prototype.say = function() {
+//   const P = this.constructor
+//   P.resolve('a').then(res => {
+//     console.log(res)
+//   })
+// }
+
+// new PromiseA().say()
 
 
 // console.log('start');
