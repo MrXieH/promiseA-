@@ -1,17 +1,19 @@
 const PromiseA = require('./promise')
 
-// var t = new PromiseA((resolve, reject) => {
-//   reject(1)
-// }).then(
-//   (value) => {
-//     console.log('value', value)
-//   }
-//   // (reason) => {
-//   //   console.log("reason", reason);
-//   // }
-// ).catch(e => {
-//   console.log('er2ror', e)
-// })
+var t = new PromiseA((resolve, reject) => {
+  resolve(1)
+}).then(
+  (value) => {
+    console.log('value', value)
+  }
+  // (reason) => {
+  //   console.log("reason", reason);
+  // }
+).catch(e => {
+  console.log('er2ror', e)
+}).finally(() => {
+  console.log('f')
+})
 
 
 // console.log('start');

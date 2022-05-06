@@ -157,6 +157,14 @@ Promise.resolvePromise = function(promise2, x, resolve, reject) {
   }
 }
 
+Promise.prototype.finally = function (callback) {
+  let P = this.constructor;
+  return this.then(
+    value  => P.resolve(callback()).then(() => value),
+    reason => P.resolve(callback()).then(() => { throw reason })
+  );
+};
+
 Promise.defer = Promise.deferred = function () {
   let dfd = {}
   dfd.promise = new Promise((resolve,reject)=>{
